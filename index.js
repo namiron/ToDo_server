@@ -6,13 +6,16 @@ const session = require('express-session');
 const passport = require('passport')
 const cors = require('cors');
 const googleRouter = require('./routes/google.routes');
+const authRouter = require('./routes/auth.routes')
 const PORT = config.get('PORT') || 5000;
 const dbUrl = config.get('dbUrl');
 const baseUrl = config.get('BASE_URL')
 const secretKey = config.get('secretKey');
-const app = express();
+//------------------------------------------------CONST
 
-//---------------------------------
+
+//---------------------------------APP
+const app = express();
 app.use(express.json());
 app.use(session({
     secret: secretKey,
@@ -27,9 +30,9 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use('/auth', googleRouter);
-//---------------------------------
+app.use('/auth', authRouter);
 
-
+//---------------------------------/APP
 
 
 const start = async () => {
@@ -46,5 +49,4 @@ const start = async () => {
         process.exit(1);
     }
 };
-
 start();
